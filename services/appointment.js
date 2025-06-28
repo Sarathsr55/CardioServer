@@ -42,6 +42,8 @@ const createAppointment = async (appointment) => {
         patientName: appointment?.patientName,
         specialist: appointment?.specialist,
         doctorImg: appointment?.doctorImg,
+        dCallStatus:false,
+        pcallStatus:false,
         time : new Date().toLocaleDateString('en-GB')
     }
     
@@ -59,6 +61,19 @@ const createAppointment = async (appointment) => {
         }
     
 
+}
+const findAppointmentByIdAndUpdate = async (appointment) =>{
+    const response = await MongoDB.db.collection(mongoConfig.collections.Appointments).findOneAndUpdate({_id : ObjectID(appointment?._id)},{$set:{dCallStatus:appointment?.dCallStatus,pCallStatus:appointment?.pCallStatus,time: new Date().toLocaleDateString('en-GB')}})
+    if(response?.lastErrorObject?.updatedExisting){
+        return {
+            status: true,
+            message: 'Updated successfully'
+        }
+    }else{
+        return {
+            error: 'Error occured'
+        }
+    }
 }
 
 const userChat = async (chat) => {
@@ -126,4 +141,4 @@ const findChat = async (id1, id2) => {
     }
 }
 
-module.exports = { createChat, userChat, findChat, findChatByIdAndUpdate, deleteChat, createAppointment,userAppointments }
+module.exports = { createChat, userChat, findChat, findChatByIdAndUpdate, deleteChat, createAppointment,userAppointments,findAppointmentByIdAndUpdate }

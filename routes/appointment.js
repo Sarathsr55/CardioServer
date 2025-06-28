@@ -1,5 +1,5 @@
 const express = require('express')
-const { createChat, userChat, findChat, deleteChat, createAppointment, userAppointments } = require('../services/appointment')
+const { createChat, userChat, findChat, deleteChat, createAppointment, userAppointments, findAppointmentByIdAndUpdate } = require('../services/appointment')
 const router = express.Router()
 
 router.post('/', async(req,res,next)=>{
@@ -35,6 +35,16 @@ router.get('/:userId', async(req,res)=>{
         }
     } catch (error) {
         return(`error occured while finding chat : ${error}`);
+    }
+})
+
+router.post('/updateappointment',async(req,res)=>{
+    const body = req.body
+    try {
+        let response = await findAppointmentByIdAndUpdate(body)
+        res.json(response)
+    } catch (error) {
+        res.json(error)
     }
 })
 
