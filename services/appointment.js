@@ -75,6 +75,18 @@ const findAppointmentByIdAndUpdate = async (appointment) =>{
         }
     }
 }
+const getAppointmentById = async(id)=>{
+    const response = await MongoDB.db.collection(mongoConfig.collections.Appointments).findOne({_id:new ObjectID(id)})
+    
+    if(response){
+        return {
+            status : true,
+            data : response
+        }
+    }else{
+        console.log(`error while fetching data`);
+    }
+}
 
 const userChat = async (chat) => {
     const response = await MongoDB.db.collection(mongoConfig.collections.CHAT).find({ members: { $in: [chat] } }).toArray()
@@ -141,4 +153,4 @@ const findChat = async (id1, id2) => {
     }
 }
 
-module.exports = { createChat, userChat, findChat, findChatByIdAndUpdate, deleteChat, createAppointment,userAppointments,findAppointmentByIdAndUpdate }
+module.exports = { createChat, userChat, findChat, findChatByIdAndUpdate, deleteChat, createAppointment,userAppointments,findAppointmentByIdAndUpdate,getAppointmentById }
