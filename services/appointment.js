@@ -43,7 +43,7 @@ const createAppointment = async (appointment) => {
         specialist: appointment?.specialist,
         doctorImg: appointment?.doctorImg,
         dCallStatus:false,
-        pcallStatus:false,
+        pCallStatus:false,
         time : new Date().toLocaleDateString('en-GB')
     }
     
